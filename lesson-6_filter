@@ -1,0 +1,18 @@
+var fs = require('fs')
+var path = require('path')
+
+module.exports = function (dir, ext, cb) {
+    var ext = "." + ext.toLowerCase()
+    fs.readdir(dir, function(err, list) {
+        if (err) return cb(err)
+        var files = []
+        for (var i = 0; i < list.length; i++) {
+            var file = list[i]
+            var ext2 = path.extname(file).toLowerCase()
+            if (!ext2.localeCompare(ext)) {
+                files.push(file)
+            }
+        }
+        cb(null, files)
+    })
+}
